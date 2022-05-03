@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 import javax.sql.DataSource;
-import entities.Utilisateur;
+
+import Entities.Utilisateur;
 
 public class UserDBUtilities {
 	

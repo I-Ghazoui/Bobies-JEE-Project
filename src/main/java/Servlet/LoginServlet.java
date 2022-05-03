@@ -13,7 +13,7 @@ import java.io.IOException;
 import javax.sql.DataSource;
 
 import DBUtilities.UserDBUtilities;
-import entities.Utilisateur;
+import Entities.Utilisateur;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -23,8 +23,7 @@ public class LoginServlet extends HttpServlet {
 	@Resource(name="jdbc/bobies_db")
 	private DataSource dataSource;
        
-    public LoginServlet() throws ServletException {
-        super();
+    public void init() throws ServletException {
         // create our student db util ... and pass in the conn pool / datasource
      	try {
      		userDBUtilities = new UserDBUtilities(dataSource);
@@ -34,9 +33,7 @@ public class LoginServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

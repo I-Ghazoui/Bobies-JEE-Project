@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% Boolean isLogin = (Boolean)request.getAttribute("isLogin");%>
+<% 
+	Boolean isLogin = (Boolean)request.getAttribute("isLogin"); 
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@
         <form action="login" method="post">
             <h2 class="visually-hidden">Login Form</h2>
             <div class="illustration"><i class="far fa-user" style="color: var(--bs-gray-dark);"></i></div>
-            <c:if test="${!isLogin}">
+            <c:if test="${isLogin == false}">
     			<div class="alert alert-danger" role="alert">Information erronée !</div>
 			</c:if>
             <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Nom d'utilisateur"></div>
