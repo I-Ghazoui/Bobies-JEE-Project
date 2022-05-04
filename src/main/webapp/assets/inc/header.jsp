@@ -12,7 +12,7 @@
         	<ul class="navbar-nav">
             	<li class="nav-item"><a class="nav-link active" href="home">Home</a></li>
                 <c:if test="${not empty user}">
-    				<li class="nav-item"><a class="nav-link" href="#">Annonce</a></li>
+    				<li class="nav-item"><a class="nav-link" href="Annonces">Annonce</a></li>
 				</c:if>
                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 			</ul>
