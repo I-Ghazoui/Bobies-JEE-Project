@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -54,12 +53,14 @@ public class RegisterServlet extends HttpServlet {
 					request.setAttribute("registerStatus", "Veuillez saisir tous les informations !");
 				} else if (!password.equals(rePassword)) {
 					request.setAttribute("registerStatus", "Les mots de passe saisis ne sont pas identiques !");
-				} else {
+				}else if(userDBUtilities.checkUsernameOrEmailExists(username, email)) {
+					request.setAttribute("registerStatus", "Nom d'utilisateur ou Email déjà utilisé !");
+				}else {
 					String description = "Hi, i'm " + nom + " " + prenom;
 					Utilisateur user = new Utilisateur(nom, prenom, username, email, password, description);
 					try {
 						userDBUtilities.userRegister(user);
-						request.setAttribute("registerStatus", "Votre compte a ete bien créée !");
+						request.setAttribute("registerStatus", "Votre compte a été bien créée !");
 					} catch (SQLException e) {
 						e.printStackTrace();
 						request.setAttribute("registerStatus", "Une erreur s'est produite veuillez réessayer...");

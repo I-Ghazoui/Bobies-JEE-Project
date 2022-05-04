@@ -50,7 +50,7 @@ public class UserDBUtilities {
 				Date dateInscription = myRs.getDate("dateInscription");
 
 				// create new student object
-				user = new Utilisateur(id, nom, prenom, username2, email,description, dateInscription);
+				user = new Utilisateur(id, nom, prenom, username2, email, description, dateInscription);
 			}
 		} catch (Exception e) {
 
@@ -61,22 +61,22 @@ public class UserDBUtilities {
 
 		return user;
 	}
-	
+
 	public void userRegister(Utilisateur user) throws SQLException {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
-		
+
 		try {
 			// get db connection
 			myConn = dataSource.getConnection();
-			
+
 			// create sql for insert
 			String sql = "insert into bobies_users "
-					   + "(username, nom, prenom, password, email, dateInscription, description) "
-					   + "values (?, ?, ?, ?, ?, NOW(), ?)";
-			
+					+ "(username, nom, prenom, password, email, dateInscription, description) "
+					+ "values (?, ?, ?, ?, ?, NOW(), ?)";
+
 			myStmt = myConn.prepareStatement(sql);
-			
+
 			// set the param values for the student
 			myStmt.setString(1, user.getUsername());
 			myStmt.setString(2, user.getNom());
@@ -84,14 +84,36 @@ public class UserDBUtilities {
 			myStmt.setString(4, user.getPassword());
 			myStmt.setString(5, user.getEmail());
 			myStmt.setString(6, user.getDescription());
-			
+
 			// execute sql insert
 			myStmt.execute();
-		}
-		finally {
+		} finally {
 			// clean up JDBC objects
 			close(myConn, myStmt, null);
 		}
+	}
+
+	public boolean checkUsernameOrEmailExists(String username, String email) {
+		boolean checkEmailOrUsernameExists = false;
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			myConn = dataSource.getConnection();
+			String sql = "select * from bobies_users WHERE username='" + username + "' OR email='" + email + "'";
+			myStmt = myConn.createStatement();
+			myRs = myStmt.executeQuery(sql);
+
+			while (myRs.next()) {
+				checkEmailOrUsernameExists = true;
+				break;
+			}
+		} catch (Exception e) {
+		} finally {
+			close(myConn, myStmt, myRs);
+		}
+		return checkEmailOrUsernameExists;
 	}
 
 	private static void close(Connection myConn, Statement myStmt, ResultSet myRs) {
