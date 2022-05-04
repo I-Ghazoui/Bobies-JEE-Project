@@ -33,7 +33,7 @@
 			</c:if>
             <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Nom d'utilisateur"></div>
             <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Mot de passe"></div>
-            <div class="mb-3"><button class="btn btn-primary d-block w-100" name="SignInButton" type="submit" style="background: var(--bs-gray-dark);">Log In</button></div><a class="forgot" href="#">Forgot your email or password?</a>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" name="SignInButton" type="submit" style="background: var(--bs-gray-dark);">Se Connecter</button></div><a class="forgot" href="#">Forgot your email or password?</a>
         </form>
     </section>
     
