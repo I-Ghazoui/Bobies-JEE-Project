@@ -56,7 +56,7 @@ public class UserDBUtilities {
 
 		} finally {
 			// close JDBC objects
-			close(myConn, myStmt, myRs);
+			CloseConnection.close(myConn, myStmt, myRs);
 		}
 
 		return user;
@@ -89,7 +89,7 @@ public class UserDBUtilities {
 			myStmt.execute();
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, null);
+			CloseConnection.close(myConn, myStmt, null);
 		}
 	}
 
@@ -111,26 +111,51 @@ public class UserDBUtilities {
 			}
 		} catch (Exception e) {
 		} finally {
-			close(myConn, myStmt, myRs);
+			CloseConnection.close(myConn, myStmt, myRs);
 		}
 		return checkEmailOrUsernameExists;
 	}
+	
+	public Utilisateur getUserById(int id) {
+		Utilisateur user = null;
 
-	private static void close(Connection myConn, Statement myStmt, ResultSet myRs) {
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+
 		try {
-			if (myRs != null) {
-				myRs.close();
-			}
+			// get a connection
+			myConn = dataSource.getConnection();
 
-			if (myStmt != null) {
-				myStmt.close();
-			}
+			// create sql statement
+			String sql = "select * from bobies_users WHERE id='" + id + "'";
 
-			if (myConn != null) {
-				myConn.close(); // doesn't really close it ... just puts back in connection pool
+			myStmt = myConn.createStatement();
+
+			// execute query
+			myRs = myStmt.executeQuery(sql);
+
+			// process result set
+			while (myRs.next()) {
+				// retrieve data from result set row
+				int id2 = myRs.getInt("id");
+				String nom = myRs.getString("nom");
+				String prenom = myRs.getString("prenom");
+				String username = myRs.getString("username");
+				String email = myRs.getString("email");
+				String description = myRs.getString("description");
+				Date dateInscription = myRs.getDate("dateInscription");
+
+				// create new student object
+				user = new Utilisateur(id, nom, prenom, username, email, description, dateInscription);
 			}
-		} catch (Exception exc) {
-			exc.printStackTrace();
+		} catch (Exception e) {
+
+		} finally {
+			// close JDBC objects
+			CloseConnection.close(myConn, myStmt, myRs);
 		}
+
+		return user;
 	}
 }

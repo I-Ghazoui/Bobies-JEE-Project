@@ -1,5 +1,11 @@
+<%@page import="Entities.Annonce"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% 
+	ArrayList<Annonce> listDesAnnonces = (ArrayList<Annonce>)request.getAttribute("listDesAnnonces"); 
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +30,7 @@
     <section class="py-5" style="background: var(--bs-light);">
         <div class="container p-4" style="/*max-width: 320px;*//*width: 90%;*/margin: 0 auto;background-color: #ffffff;/*padding: 40px;*/border-radius: 4px;color: #505e6c;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
             <div class="row">
-                <div class="col-3 annonceFilter-clean p-0">
+                <div class="col-2 annonceFilter-clean p-0">
                     <form class="p-2" method="post">
                         <div class="mb-3"><input class="form-control" type="text" name="nomAnimal" placeholder="Nom"></div>
                         <div class="mb-3"><input class="form-control" type="email" name="adresseAnimal" placeholder="Adresse"></div>
@@ -48,17 +54,19 @@
                         <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-gray-dark);">Chercher !</button></div>
                     </form>
                 </div>
-                <div class="col-9">
-                	<div class="card shadow w-25">
-  						<div class="innerCard">
-    						<img src="assets/img/sl-texture_verte.jpg" class="card-img-top" alt="...">
-  						</div>
-  						<div class="card-body text-center p-2">
-    						<h5 class="card-title">Luky</h5>
-    						<p class="card-text">Some quick example text to build on the card title.</p>
-    						<a href="#" class="btn btn-info d-block">Consulter</a>
-  						</div>
-					</div>
+                <div class="col-10">
+                	<c:forEach items="${listDesAnnonces}" var="annonce">
+						<div class="card shadow w-25">
+	  						<div class="innerCard">
+	    						<img src="<c:out value="${annonce.animal.image}" />" class="card-img-top" alt="...">
+	  						</div>
+	  						<div class="card-body text-center">
+	    						<h5 class="card-title">${annonce.nom}</h5>
+	    						<p class="card-text">${annonce.petiteDescription}</p>
+	    						<a href="#" class="btn btn-info d-block">Consulter</a>
+	  						</div>
+						</div>
+					</c:forEach>
 				</div>
             </div>
         </div>
