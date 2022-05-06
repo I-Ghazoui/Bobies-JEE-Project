@@ -57,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
 					request.setAttribute("registerStatus", "Nom d'utilisateur ou Email déjà utilisé !");
 				}else {
 					String description = "Hi, i'm " + nom + " " + prenom;
-					Utilisateur user = new Utilisateur(nom, prenom, username, email, password, description);
+					Utilisateur user = new Utilisateur(nom, prenom, username, email, "https://static.wikia.nocookie.net/3f85a5ea-0c09-4faf-b0fc-071f02e8e0cf/scale-to-width/755",password, description);
 					try {
 						userDBUtilities.userRegister(user);
 						request.setAttribute("registerStatus", "Votre compte a été bien créée !");

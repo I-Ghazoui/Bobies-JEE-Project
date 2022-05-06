@@ -24,7 +24,12 @@
 			</c:if>
 			<c:if test="${not empty user}">
     			<ul class="navbar-nav ms-auto">
-                   	<li class="nav-item"><button onclick="window.location.href='logout'" class="btn btn-dark btn-sm" type="button">Se déconnecter</button></li>
+    				<li class="nav-item d-flex align-items-center mx-0">
+                        <div class="d-flex flex-row"><img class="rounded-circle" src="${user.image}" style="width: 30px;"></div>
+                    </li>
+                    <li class="nav-item mx-0"><a class="nav-link d-flex align-items-center px-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><span>GHAZOUI Ilyas</span></a></li>
+                    <li class="nav-item d-flex align-items-center mx-0"><a class="nav-link d-flex align-items-center px-1" href="EditProfileServlet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-gear"></i></a></li>
+                   	<li class="nav-item d-flex align-items-center mx-0"><a class="nav-link d-flex align-items-center px-1" href="logout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-sign-out"></i></a></li>
                	</ul>
 			</c:if>
 		</div>

@@ -16,6 +16,7 @@ public class Utilisateur {
 	String prenom;
 	String username;
 	String email;
+	String image;
 	String password;
 	String description;
 	Date dateInscription;
@@ -25,7 +26,7 @@ public class Utilisateur {
 
 	}
 
-	public Utilisateur(int id, String nom, String prenom, String username, String email, String description,
+	public Utilisateur(int id, String nom, String prenom, String username, String email, String image, String description,
 			Date dateInscription) {
 		super();
 		this.id = id;
@@ -33,16 +34,18 @@ public class Utilisateur {
 		this.prenom = prenom;
 		this.username = username;
 		this.email = email;
+		this.image = image;
 		this.description = description;
 		this.dateInscription = dateInscription;
 	}
 
-	public Utilisateur(String nom, String prenom, String username, String email, String password, String description) {
+	public Utilisateur(String nom, String prenom, String username, String email, String image, String password, String description) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.username = username;
 		this.email = email;
+		this.image = image;
 		this.password = password;
 		this.description = description;
 	}

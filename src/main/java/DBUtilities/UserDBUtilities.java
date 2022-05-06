@@ -46,11 +46,12 @@ public class UserDBUtilities {
 				String prenom = myRs.getString("prenom");
 				String username2 = myRs.getString("username");
 				String email = myRs.getString("email");
+				String image = myRs.getString("image");
 				String description = myRs.getString("description");
 				Date dateInscription = myRs.getDate("dateInscription");
 
 				// create new student object
-				user = new Utilisateur(id, nom, prenom, username2, email, description, dateInscription);
+				user = new Utilisateur(id, nom, prenom, username2, email, image, description, dateInscription);
 			}
 		} catch (Exception e) {
 
@@ -72,8 +73,8 @@ public class UserDBUtilities {
 
 			// create sql for insert
 			String sql = "insert into bobies_users "
-					+ "(username, nom, prenom, password, email, dateInscription, description) "
-					+ "values (?, ?, ?, ?, ?, NOW(), ?)";
+					+ "(username, nom, prenom, password, email, image, dateInscription, description) "
+					+ "values (?, ?, ?, ?, ?, ?, NOW(), ?)";
 
 			myStmt = myConn.prepareStatement(sql);
 
@@ -83,7 +84,8 @@ public class UserDBUtilities {
 			myStmt.setString(3, user.getPrenom());
 			myStmt.setString(4, user.getPassword());
 			myStmt.setString(5, user.getEmail());
-			myStmt.setString(6, user.getDescription());
+			myStmt.setString(6, user.getImage());
+			myStmt.setString(7, user.getDescription());
 
 			// execute sql insert
 			myStmt.execute();
@@ -143,11 +145,12 @@ public class UserDBUtilities {
 				String prenom = myRs.getString("prenom");
 				String username = myRs.getString("username");
 				String email = myRs.getString("email");
+				String image = myRs.getString("image");
 				String description = myRs.getString("description");
 				Date dateInscription = myRs.getDate("dateInscription");
 
 				// create new student object
-				user = new Utilisateur(id, nom, prenom, username, email, description, dateInscription);
+				user = new Utilisateur(id, nom, prenom, username, email, image, description, dateInscription);
 			}
 		} catch (Exception e) {
 
