@@ -27,7 +27,8 @@
     				<li class="nav-item d-flex align-items-center mx-0">
                         <div class="d-flex flex-row"><img class="rounded-circle" src="${user.image}" style="width: 30px;"></div>
                     </li>
-                    <li class="nav-item mx-0"><a class="nav-link d-flex align-items-center px-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><span>GHAZOUI Ilyas</span></a></li>
+                    <li class="nav-item mx-0"><a class="nav-link d-flex align-items-center px-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><span>${user.nom} ${user.prenom}</span></a></li>
+                    <li class="nav-item d-flex align-items-center mx-0"><a class="nav-link d-flex align-items-center px-1" href="AjouterAnnonceServlet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-plus"></i></a></li>
                     <li class="nav-item d-flex align-items-center mx-0"><a class="nav-link d-flex align-items-center px-1" href="EditProfileServlet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-gear"></i></a></li>
                    	<li class="nav-item d-flex align-items-center mx-0"><a class="nav-link d-flex align-items-center px-1" href="logout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-sign-out"></i></a></li>
                	</ul>

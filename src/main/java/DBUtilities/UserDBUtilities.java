@@ -140,7 +140,6 @@ public class UserDBUtilities {
 			// process result set
 			while (myRs.next()) {
 				// retrieve data from result set row
-				int id2 = myRs.getInt("id");
 				String nom = myRs.getString("nom");
 				String prenom = myRs.getString("prenom");
 				String username = myRs.getString("username");
@@ -160,5 +159,34 @@ public class UserDBUtilities {
 		}
 
 		return user;
+	}
+
+	public void userUpdateInfos(int idUser, String nom, String prenom, String description) throws SQLException {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create sql for insert
+			String sql = "UPDATE bobies_users "
+					+ "SET nom=?, prenom=?, description=? "
+					+ "WHERE id='"+idUser+"'";
+
+			myStmt = myConn.prepareStatement(sql);
+
+			// set the param values for the student
+			myStmt.setString(1, nom);
+			myStmt.setString(2, prenom);
+			myStmt.setString(3, description);
+			
+
+			// execute sql insert
+			myStmt.execute();
+		} finally {
+			// clean up JDBC objects
+			CloseConnection.close(myConn, myStmt, null);
+		}
 	}
 }

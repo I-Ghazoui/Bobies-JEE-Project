@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	String updateProfilStatus = (String)request.getAttribute("updateProfilStatus");
+	String userAddCookies = (String)request.getAttribute("userAddCookies");
+	String favAnimal = null;
+
+	Cookie[] cookies = request.getCookies();	//Get all cookies
+	for(Cookie cookie : cookies){
+        if(cookie.getName().equals("favAnimal")){
+        	favAnimal = cookie.getValue();
+        	break;
+        }
+	}
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +28,6 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/card-image-zoom-on-hover.css">
-    <link rel="stylesheet" href="assets/css/Filter-Annonce.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
 </head>
@@ -27,34 +40,48 @@
         <div class="container p-4" style="/*max-width: 320px;*//*width: 90%;*/margin: 0 auto;background-color: #ffffff;/*padding: 40px;*/border-radius: 4px;color: #505e6c;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
             <div class="row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5 mb-3" style="width: 150px;" src="${user.image}"><span class="font-weight-bold">GHAZOUI Ilyas</span><span class="text-black-50">i-ghazoui@live.fr</span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5 mb-3" style="width: 150px;" src="${user.image}"><span class="font-weight-bold">${user.nom} ${user.prenom}</span><span class="text-black-50">${user.email}</span></div>
                 </div>
                 <div class="col-md-6 border-right">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Paramètres de profil<br></h4>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="form-label">Nom</label><input type="text" class="form-control" name="nom" value="${user.nom}"></div>
-                            <div class="col-md-6"><label class="form-label">Prenom</label><input type="text" class="form-control" name="prenom" value="${user.prenom}"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="form-label"><strong>Description</strong><br></label><textarea class="form-control" name="description">${user.description}</textarea></div>
-                        </div>
-                        <div class="mt-5 text-center"><button class="btn btn-dark" type="button">Sauvegarder<br></button></div>
+	                    <form action="EditProfileServlet" method="POST">
+	                        <div class="d-flex justify-content-between align-items-center mb-3">
+	                            <h4 class="text-right">Paramètres de profil<br></h4>
+	                        </div>
+	                        <c:if test="${not empty updateProfilStatus}">
+				    			<div class="alert alert-success" role="alert">${updateProfilStatus}</div>
+							</c:if>
+	                        <div class="row mt-2">
+	                            <div class="col-md-6"><label class="form-label">Nom</label><input type="text" class="form-control" name="nom" value="${user.nom}" required></div>
+	                            <div class="col-md-6"><label class="form-label">Prenom</label><input type="text" class="form-control" name="prenom" value="${user.prenom}" required></div>
+	                        </div>
+	                        <div class="row mt-3">
+	                            <div class="col-md-12"><label class="form-label"><strong>Description</strong><br></label><textarea class="form-control" name="description" required>${user.description}</textarea></div>
+	                        </div>
+	                        <div class="mt-5 text-center"><button class="btn btn-dark" name="modifierProfil" type="submit">Sauvegarder<br></button></div>
+	                    </form>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Cookies</h4>
-                        </div>
-                        <div class="col-md-12"><label class="form-label">Animal préféré:</label><select class="form-control" name="TypeAnimal">
-                                <option value="" selected="">Type d'Animal</option>
-                                <option value="chien">Chien</option>
-                                <option value="chat">Chat</option>
-                                <option value="oiseau">Oiseau</option>
-                            </select></div>
+                    	<form action="EditProfileServlet" method="POST">
+	                        <div class="d-flex justify-content-between align-items-center mb-3">
+	                            <h4 class="text-right">Cookies</h4>
+	                        </div>
+	                        <c:if test="${not empty userAddCookies}">
+				    			<div class="alert alert-success" role="alert">${userAddCookies}</div>
+							</c:if>
+	                        <div class="col-md-12">
+	                        	<label class="form-label">Animal préféré:</label>
+	                        	<select class="form-control" name="favAnimal">
+	                                <option value="notChosen" <% if(favAnimal == null){out.print("selected");} %>>Type d'Animal</option>
+	                                <option value="chien" <% if(favAnimal!=null && favAnimal.equals("chien")){out.print("selected");} %>>Chien</option>
+	                                <option value="chat" <% if(favAnimal!=null && favAnimal.equals("chat")){out.print("selected");} %>>Chat</option>
+	                                <option value="oiseau" <% if(favAnimal!=null && favAnimal.equals("oiseau")){out.print("selected");} %>>Oiseau</option>
+	                            </select>
+							</div>
+							<div class="mt-5 text-center"><button class="btn btn-dark" name="sauvegarderCookies" type="submit">Sauvegarder<br></button></div>
+	                    </form>
                     </div>
                 </div>
             </div>

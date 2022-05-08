@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/card-image-zoom-on-hover.css">
-    <link rel="stylesheet" href="assets/css/Filter-Annonce.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
 </head>

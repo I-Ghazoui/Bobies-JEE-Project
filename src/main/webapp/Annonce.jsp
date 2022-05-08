@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/card-image-zoom-on-hover.css">
-    <link rel="stylesheet" href="assets/css/Filter-Annonce.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
 </head>
@@ -29,20 +28,20 @@
     <%@include file="assets/inc/header.jsp" %>
     
     <section class="py-5" style="background: var(--bs-light);">
-        <div class="container p-4" style="/*max-width: 320px;*//*width: 90%;*/margin: 0 auto;background-color: #ffffff;/*padding: 40px;*/border-radius: 4px;color: #505e6c;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
+        <div class="container p-4" style="margin: 0 auto;background-color: #ffffff;border-radius: 4px;color: #505e6c;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
             <div class="row">
-                <div class="col-2 annonceFilter-clean p-0">
+                <div class="col-md-3 p-0">
                     <form class="p-2" method="post">
                         <div class="mb-3"><input class="form-control" type="text" name="nomAnimal" placeholder="Nom"></div>
                         <div class="mb-3"><input class="form-control" type="email" name="adresseAnimal" placeholder="Adresse"></div>
                         <div class="mb-3"><select class="form-select form-control" name="TypeAnimal">
-                                <option value="" selected>Type d'Animal</option>
+                                <option value="" selected="">Type d'Animal</option>
                                 <option value="chien">Chien</option>
                                 <option value="chat">Chat</option>
                                 <option value="oiseau">Oiseau</option>
                             </select></div>
                         <div class="mb-3"><select class="form-select form-control" name="TypeAnnonce">
-                                <option value="" selected>Type d'Annonce</option>
+                                <option value="" selected="">Type d&apos;Annonce</option>
                                 <optgroup label="Adoption">
                                     <option value="offreAnimal">Offre d&apos;animal</option>
                                     <option value="demandeAdoption">Demande d&apos;adoption</option>
@@ -52,26 +51,32 @@
                                     <option value="offreHebergement">Offre d&apos;hébergement</option>
                                 </optgroup>
                             </select></div>
-                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-gray-dark);">Chercher !</button></div>
+                        <div class="d-flex justify-content-center mb-3"><button class="btn btn-dark d-block" type="submit">Chercher !</button></div>
                     </form>
                 </div>
-                <div class="col-10">
-                	<c:forEach items="${listDesAnnonces}" var="annonce">
-						<div class="card shadow w-25">
-	  						<div class="innerCard">
-	    						<img src="<c:out value="${annonce.animal.image}" />" class="card-img-top" alt="...">
-	  						</div>
-	  						<div class="card-body text-center">
-	    						<h5 class="card-title">${annonce.nom}</h5>
-	    						<p class="card-text">${annonce.petiteDescription}</p>
-	    						<a href="#" class="btn btn-info d-block">Consulter</a>
-	  						</div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-lg-3 p-2">
+                        	<c:forEach items="${listDesAnnonces}" var="annonce">
+                        		<div class="card shadow">
+			  						<div class="innerCard">
+			    						<img src="<c:out value="${annonce.animal.image}" />" class="card-img-top" alt="...">
+			  						</div>
+			  						<div class="card-body text-center">
+			    						<h5 class="card-title">${annonce.nom}</h5>
+			    						<p class="card-text">${annonce.petiteDescription}</p>
+			    						<a href="#" class="btn btn-info d-block" data-bs-toggle="modal" data-bs-target="#exampleModal">Consulter</a>
+			  						</div>
+								</div>
+                        	</c:forEach>
 						</div>
-					</c:forEach>
-				</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+	<%@include file="assets/inc/AnnonceInfos.jsp" %>
 
 	<%@include file="assets/inc/footer.jsp" %>
 

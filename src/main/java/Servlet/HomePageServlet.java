@@ -16,12 +16,7 @@ public class HomePageServlet extends HttpServlet {
 		request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("ChangerAnimalFavouri") != null) {
-			Cookie cookie = new Cookie("favAnimal", request.getParameter("favAnimal"));
-			response.addCookie(cookie);
-		}
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
