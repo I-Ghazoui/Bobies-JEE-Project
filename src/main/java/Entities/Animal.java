@@ -12,15 +12,13 @@ public class Animal {
 	int id;
 	String nom;
 	int age;
-	String description;
 	String image;
 
 	// Constructeurs
-	public Animal(String nom, int age, String description, String image) {
+	public Animal(String nom, int age, String image) {
 		super();
 		this.nom = nom;
 		this.age = age;
-		this.description = description;
 		this.image = image;
 	}
 }

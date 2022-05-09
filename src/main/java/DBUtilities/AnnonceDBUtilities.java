@@ -1,7 +1,9 @@
 package DBUtilities;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,4 +71,43 @@ public class AnnonceDBUtilities {
 		return listDesAnnonces;
 	}
 
+	public void userAddAnnonce(Annonce annonce) throws SQLException {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create sql for insert
+			String sql = "insert into bobies_annonces "
+					+ "(idUser, idAnimal, nom, petiteDescription, description, dateAnnonce) "
+					+ "values (?, ?, ?, ?, ?, ?)";
+
+			myStmt = myConn.prepareStatement(sql);
+
+			// set the param values for the student
+			myStmt.setInt(1, annonce.getUser().getId());
+			myStmt.setInt(2, annonce.getAnimal().getId());
+			myStmt.setString(3, annonce.getNom());
+			if(annonce.getPetiteDescription().length()>47) {
+				annonce.setPetiteDescription((annonce.getPetiteDescription().substring(0, 47)+"..."));
+			}
+			myStmt.setString(4, annonce.getPetiteDescription());
+			if(annonce.getDescription().length()>250) {
+				annonce.setDescription((annonce.getDescription().substring(0, 250)));
+			}
+			myStmt.setString(5, annonce.getDescription());
+			long timeInMilliSeconds = annonce.getDateAnnonce().getTime();
+			myStmt.setDate(6, new java.sql.Date(timeInMilliSeconds));
+
+			// execute sql insert
+			myStmt.execute();
+		}catch(Exception e){
+			System.out.println(e);
+		}finally {
+			// clean up JDBC objects
+			CloseConnection.close(myConn, myStmt, null);
+		}
+	}
 }

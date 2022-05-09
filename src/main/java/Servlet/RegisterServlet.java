@@ -63,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 						request.setAttribute("registerStatus", "Votre compte a été bien créée !");
 					} catch (SQLException e) {
 						e.printStackTrace();
-						request.setAttribute("registerStatus", "Une erreur s'est produite veuillez réessayer...");
+						request.setAttribute("registerStatus", "Une erreur s'est produite, Veuillez réessayer...");
 					}
 				}
 			}

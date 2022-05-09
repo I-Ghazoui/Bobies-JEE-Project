@@ -1,11 +1,11 @@
 package DBUtilities;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.sql.DataSource;
-
 import Entities.Animal;
 
 public class AnimalDBUtilities {
@@ -41,11 +41,10 @@ public class AnimalDBUtilities {
 				int id2 = myRs.getInt("id");
 				String nom = myRs.getString("nom");
 				int age = myRs.getInt("age");
-				String description = myRs.getString("description");
 				String image = myRs.getString("image");
 
 				// create new student object
-				animal = new Animal(id2, nom, age, description, image);
+				animal = new Animal(id2, nom, age, image);
 			}
 		} catch (Exception e) {
 
@@ -55,5 +54,42 @@ public class AnimalDBUtilities {
 		}
 
 		return animal;
+	}
+
+	public int userAddAnimal(Animal animal) throws SQLException {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		int animalInsertedId = 0;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create sql for insert
+			String sql = "insert into bobies_animals "
+					+ "(nom, age, image) "
+					+ "values (?, ?, ?)";
+
+			myStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			// set the param values for the student
+			myStmt.setString(1, animal.getNom());
+			myStmt.setInt(2, animal.getAge());
+			myStmt.setString(3, animal.getImage());
+
+			// execute sql insert
+			myStmt.execute();
+			
+			//get latest id inserted
+			ResultSet rs = myStmt.getGeneratedKeys();
+			if(rs.next()){
+                animalInsertedId = rs.getInt(1);
+            }
+		} finally {
+			// clean up JDBC objects
+			CloseConnection.close(myConn, myStmt, null);
+		}
+		return animalInsertedId;
 	}
 }

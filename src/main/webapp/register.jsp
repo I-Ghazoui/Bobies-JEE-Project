@@ -30,7 +30,7 @@
         <form method="post">
             <h2 class="visually-hidden">Login Form</h2>
             <div class="illustration"><i class="far fa-user" style="color: var(--bs-gray-dark);"></i></div>
-             <c:if test="${not empty registerStatus}">
+            <c:if test="${not empty registerStatus}">
     			<div class="alert alert-danger" role="alert">${registerStatus}</div>
 			</c:if>
             <div class="d-flex mb-3"><input class="form-control w-50" type="text" name="nom" placeholder="Nom"><input class="form-control w-50" type="text" name="prenom" placeholder="Prenom"></div>

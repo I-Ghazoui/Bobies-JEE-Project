@@ -2,6 +2,10 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
+<%
+	String successAnnonceStatus = (String)request.getAttribute("successAnnonceStatus");
+	String failedAnnonceStatus = (String)request.getAttribute("failedAnnonceStatus");
+%>
 
 <head>
     <meta charset="utf-8">
@@ -30,23 +34,52 @@
                 <div class="col-md-8 border-right">
                     <form action="AjouterAnnonceServlet" method="POST">
                         <div class="p-3 py-5">
+                        	<c:if test="${not empty successAnnonceStatus}">
+				    			<div class="alert alert-success" role="alert">${successAnnonceStatus}</div>
+							</c:if>
+							<c:if test="${not empty failedAnnonceStatus}">
+				    			<div class="alert alert-danger" role="alert">${failedAnnonceStatus}</div>
+							</c:if>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Informations d'animal<br></h4>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-6"><label class="form-label">Nom</label><input class="form-control form-control" type="text" name="nomAnimal" required></div>
-                                <div class="col-md-6"><label class="form-label">Age</label><input class="form-control form-control" type="number" name="ageAnimal" required></div>
+                                <div class="col-md-6"><label class="form-label">Type d&apos;Animal</label>
+                                	<select class="form-select form-control" name="TypeAnimal">
+										<option value="" selected="">Type d&apos;Animal</option>
+										<option value="chien">Chien</option>
+										<option value="chat">Chat</option>
+										<option value="oiseau">Oiseau</option>
+									</select>
+                                </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6"><label class="form-label">Description</label><textarea class="form-control form-control" name="descriptionAnimal" rows="2" spellcheck="true" maxlength="250" style="resize: none;" required></textarea></div>
+                                <div class="col-md-6"><label class="form-label">Age</label><input class="form-control form-control" type="number" name="ageAnimal" required></div>
                                 <div class="col-md-6"><label class="form-label">Lien image</label><input class="form-control form-control" type="text" name="imageAnimal" required></div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center my-3">
                                 <h4 class="text-right">Information d'annonce<br></h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6"><label class="form-label">Titre</label><input class="form-control form-control" type="text" name="nomAnnonce" required></div>
-                                <div class="col-md-6"><label class="form-label">Date</label><input class="form-control form-control" type="date" name="dateAnnonce" required></div>
+                                <div class="col-md-4"><label class="form-label">Titre</label><input class="form-control form-control" type="text" name="titreAnnonce" required></div>
+                                <div class="col-md-4"><label class="form-label">Type d&apos;Annonce</label>
+                                	<select class="form-select form-control" name="TypeAnnonce">
+										<option value="" selected="">Type d&apos;Annonce</option>
+										<optgroup label="Adoption">
+											<option value="offreAnimal">Offre d&apos;animal</option>
+											<option value="demandeAdoption">Demande
+												d&apos;adoption</option>
+										</optgroup>
+										<optgroup label="Hébergement provisoire">
+											<option value="demandeHebergement">Demande
+												d&apos;hébergement</option>
+											<option value="offreHebergement">Offre
+												d&apos;hébergement</option>
+										</optgroup>
+									</select>
+                                </div>
+                                <div class="col-md-4"><label class="form-label">Date</label><input class="form-control form-control" type="date" name="dateAnnonce" required></div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col"><label class="form-label"><strong>Description</strong><br></label><textarea class="form-control form-control" name="descriptionAnnonce" maxlength="250" style="resize: none;" rows="3" required></textarea></div>
