@@ -45,7 +45,19 @@ public class AnnoncesServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null) {	//User is connected
+			String typeAnimal = request.getParameter("TypeAnimal");
+			request.setAttribute("typeAnimal", typeAnimal);	//add select animal type
+			String typeAnnonce = request.getParameter("TypeAnnonce");
+			request.setAttribute("typeAnnonce", typeAnnonce);	//add select annonce type
+			//Get filtered annonces
+			ArrayList<Annonce> listDesAnnonces = annonceDBUtilities.getFilteredAllAnnonces(typeAnimal, typeAnnonce);
+			request.setAttribute("listDesAnnonces", listDesAnnonces);
+			request.getServletContext().getRequestDispatcher("/Annonce.jsp").forward(request, response);
+		}else {	//User not connected
+			request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		}
 	}
 
 }

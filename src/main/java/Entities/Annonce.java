@@ -16,17 +16,19 @@ public class Annonce {
 	String nom;
 	String petiteDescription;
 	String description;
+	String type;
 	Date dateAnnonce;
 
 	// Constructeurs
 	public Annonce(Utilisateur user, Animal animal, String nom, String petiteDescription, String description,
-			Date dateAnnonce) {
+			String type, Date dateAnnonce) {
 		super();
 		this.user = user;
 		this.animal = animal;
 		this.nom = nom;
 		this.petiteDescription = petiteDescription;
 		this.description = description;
+		this.type = type;
 		this.dateAnnonce = dateAnnonce;
 	}
 

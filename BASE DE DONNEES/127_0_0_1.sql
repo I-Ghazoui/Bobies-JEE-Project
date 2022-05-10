@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 06 mai 2022 à 19:50
+-- Généré le : mar. 10 mai 2022 à 14:26
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.2
 
@@ -33,7 +33,7 @@ CREATE TABLE `bobies_animals` (
   `id` int(11) NOT NULL,
   `nom` varchar(50) COLLATE utf8_bin NOT NULL,
   `age` int(11) NOT NULL,
-  `description` varchar(250) COLLATE utf8_bin NOT NULL,
+  `type` varchar(25) COLLATE utf8_bin NOT NULL,
   `image` varchar(250) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -41,8 +41,13 @@ CREATE TABLE `bobies_animals` (
 -- Déchargement des données de la table `bobies_animals`
 --
 
-INSERT INTO `bobies_animals` (`id`, `nom`, `age`, `description`, `image`) VALUES
-(1, 'Chien loup', 1, 'Lovely Dog', 'https://lemagduchien.ouest-france.fr/images/dossiers/2019-06/chien-heureux-064736.jpg');
+INSERT INTO `bobies_animals` (`id`, `nom`, `age`, `type`, `image`) VALUES
+(12, 'Chien loup', 15, 'chien', '1.jpg'),
+(13, 'Luky', 1, 'chat', '2.jpg'),
+(14, 'Golden', 2, 'poisson', '3.jpg'),
+(15, 'blue', 2, 'cameleon', '4.jpg'),
+(16, 'lazy', 2, 'lapin', '5.jpg'),
+(20, 'test', 2, 'oiseau', '3.jpg');
 
 -- --------------------------------------------------------
 
@@ -57,6 +62,7 @@ CREATE TABLE `bobies_annonces` (
   `nom` varchar(20) COLLATE utf8_bin NOT NULL,
   `petiteDescription` varchar(50) COLLATE utf8_bin NOT NULL,
   `description` varchar(250) COLLATE utf8_bin NOT NULL,
+  `type` varchar(50) COLLATE utf8_bin NOT NULL,
   `dateAnnonce` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -64,8 +70,13 @@ CREATE TABLE `bobies_annonces` (
 -- Déchargement des données de la table `bobies_annonces`
 --
 
-INSERT INTO `bobies_annonces` (`id`, `idUser`, `idAnimal`, `nom`, `petiteDescription`, `description`, `dateAnnonce`) VALUES
-(1, 4, 1, 'Chien a heberger', 'Un chien loup a heberger pour les interessé', 'Un chien loup a heberger pour les interessé\r\nUn chien loup a heberger pour les interessé\r\nUn chien loup a heberger pour les interessé\r\nUn chien loup a heberger pour les interessé', '2022-05-04');
+INSERT INTO `bobies_annonces` (`id`, `idUser`, `idAnimal`, `nom`, `petiteDescription`, `description`, `type`, `dateAnnonce`) VALUES
+(10, 4, 12, 'Chien a heberger', 'Le Lorem Ipsum est simplement du faux texte emp...', 'Le Lorem Ipsum est simplement du faux texte employ� dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann�es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'offreHebergement', '2022-05-25'),
+(11, 4, 13, 'Lovely Cat', 'Lovely cat for who wants to adopt it .', 'Le Lorem Ipsum est simplement du faux texte employ? dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann?es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'offreAnimal', '2022-05-11'),
+(12, 4, 14, 'Lovely Golden Fish', 'Le Lorem Ipsum est simplement du faux texte emp...', 'Le Lorem Ipsum est simplement du faux texte employ� dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann�es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'offreHebergement', '2022-05-11'),
+(13, 4, 15, 'Blue Cameleon', 'Le Lorem Ipsum est simplement du faux texte emp...', 'Le Lorem Ipsum est simplement du faux texte employ� dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann�es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'demandeHebergement', '2022-05-11'),
+(14, 4, 16, 'Lazy Rabbit', 'Le Lorem Ipsum est simplement du faux texte emp...', 'Le Lorem Ipsum est simplement du faux texte employ� dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann�es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'demandeAdoption', '2022-05-05'),
+(16, 4, 20, 'test', 'Le Lorem Ipsum est simplement du faux texte emp...', 'Le Lorem Ipsum est simplement du faux texte employ� dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann�es 1500, quand un imprimeur anonyme assembla ensemble des morceaux d', 'offreAnimal', '2022-05-11');
 
 -- --------------------------------------------------------
 
@@ -107,8 +118,8 @@ ALTER TABLE `bobies_animals`
 --
 ALTER TABLE `bobies_annonces`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idAnimal` (`idAnimal`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idAnimal` (`idAnimal`);
 
 --
 -- Index pour la table `bobies_users`
@@ -121,16 +132,22 @@ ALTER TABLE `bobies_users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `bobies_animals`
+--
+ALTER TABLE `bobies_animals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT pour la table `bobies_annonces`
 --
 ALTER TABLE `bobies_annonces`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `bobies_users`
 --
 ALTER TABLE `bobies_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées
@@ -140,8 +157,8 @@ ALTER TABLE `bobies_users`
 -- Contraintes pour la table `bobies_annonces`
 --
 ALTER TABLE `bobies_annonces`
-  ADD CONSTRAINT `bobies_annonces_ibfk_1` FOREIGN KEY (`idAnimal`) REFERENCES `bobies_animals` (`id`),
-  ADD CONSTRAINT `bobies_annonces_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `bobies_users` (`id`);
+  ADD CONSTRAINT `bobies_annonces_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `bobies_users` (`id`),
+  ADD CONSTRAINT `bobies_annonces_ibfk_3` FOREIGN KEY (`idAnimal`) REFERENCES `bobies_animals` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

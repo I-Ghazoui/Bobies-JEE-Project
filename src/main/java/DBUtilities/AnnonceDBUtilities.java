@@ -55,10 +55,11 @@ public class AnnonceDBUtilities {
 				String nom = myRs.getString("nom");
 				String petiteDescription = myRs.getString("petiteDescription");
 				String description = myRs.getString("description");
+				String type = myRs.getString("type");
 				Date dateAnnonce = myRs.getDate("dateAnnonce");
 
 				// create new student object
-				Annonce annonce = new Annonce(id, user, animal, nom, petiteDescription, description, dateAnnonce);
+				Annonce annonce = new Annonce(id, user, animal, nom, petiteDescription, description, type, dateAnnonce);
 				listDesAnnonces.add(annonce);
 			}
 		} catch (Exception e) {
@@ -81,8 +82,8 @@ public class AnnonceDBUtilities {
 
 			// create sql for insert
 			String sql = "insert into bobies_annonces "
-					+ "(idUser, idAnimal, nom, petiteDescription, description, dateAnnonce) "
-					+ "values (?, ?, ?, ?, ?, ?)";
+					+ "(idUser, idAnimal, nom, petiteDescription, description, type, dateAnnonce) "
+					+ "values (?, ?, ?, ?, ?, ?, ?)";
 
 			myStmt = myConn.prepareStatement(sql);
 
@@ -98,8 +99,9 @@ public class AnnonceDBUtilities {
 				annonce.setDescription((annonce.getDescription().substring(0, 250)));
 			}
 			myStmt.setString(5, annonce.getDescription());
+			myStmt.setString(6, annonce.getType());
 			long timeInMilliSeconds = annonce.getDateAnnonce().getTime();
-			myStmt.setDate(6, new java.sql.Date(timeInMilliSeconds));
+			myStmt.setDate(7, new java.sql.Date(timeInMilliSeconds));
 
 			// execute sql insert
 			myStmt.execute();
@@ -109,5 +111,58 @@ public class AnnonceDBUtilities {
 			// clean up JDBC objects
 			CloseConnection.close(myConn, myStmt, null);
 		}
+	}
+
+	public ArrayList<Annonce> getFilteredAllAnnonces(String typeAnimal, String typeAnnonce) {
+		ArrayList<Annonce> listDesAnnonces = new ArrayList<Annonce>();
+
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+
+			// create sql statement
+			String sql = "select * from bobies_annonces";
+			//Add annonce filter type
+			if(typeAnnonce != null && !typeAnnonce.isBlank()) {
+				sql += " WHERE type = '"+typeAnnonce+"'";
+			}
+
+			myStmt = myConn.createStatement();
+
+			// execute query
+			myRs = myStmt.executeQuery(sql);
+
+			// process result set
+			while (myRs.next()) {
+				//Get Animal
+				AnimalDBUtilities animalDBUtilities = new AnimalDBUtilities(dataSource);
+				Animal animal = animalDBUtilities.getAnimalByIdAndType(myRs.getInt("idAnimal"), typeAnimal);
+				if(animal != null) {
+					// retrieve data from result set row
+					int id = myRs.getInt("id");
+					//Get User
+					UserDBUtilities userDBUtilities = new UserDBUtilities(dataSource);
+					Utilisateur user = userDBUtilities.getUserById(myRs.getInt("idUser"));
+					//Other Infos
+					String nom = myRs.getString("nom");
+					String petiteDescription = myRs.getString("petiteDescription");
+					String description = myRs.getString("description");
+					String type = myRs.getString("type");
+					Date dateAnnonce = myRs.getDate("dateAnnonce");
+					// create new student object
+					Annonce annonce = new Annonce(id, user, animal, nom, petiteDescription, description, type, dateAnnonce);
+					listDesAnnonces.add(annonce);
+				}
+			}
+		} catch (Exception e) {
+		} finally {
+			// close JDBC objects
+			CloseConnection.close(myConn, myStmt, myRs);
+		}
+		return listDesAnnonces;
 	}
 }

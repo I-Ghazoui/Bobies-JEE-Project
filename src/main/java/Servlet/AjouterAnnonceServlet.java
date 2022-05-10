@@ -53,20 +53,22 @@ public class AjouterAnnonceServlet extends HttpServlet {
 		HttpSession session = request.getSession();	//Get user session
 		if(session.getAttribute("user") != null) {	//User is connected
 			String nomAnimal = request.getParameter("nomAnimal");
+			String typeAnimal = request.getParameter("TypeAnimal");
 			String ageAnimal = request.getParameter("ageAnimal");
 			String imageAnimal = request.getParameter("imageAnimal");
 			String titreAnnonce = request.getParameter("titreAnnonce");
 			String dateAnnonce = request.getParameter("dateAnnonce");
+			String typeAnnonce = request.getParameter("TypeAnnonce");
 			String descriptionAnnonce = request.getParameter("descriptionAnnonce");
 			
-			if(!(nomAnimal.isBlank() || ageAnimal.isBlank() || imageAnimal.isBlank() 
-					|| titreAnnonce.isBlank() || dateAnnonce.isBlank() || descriptionAnnonce.isBlank())) {
-				Animal animal = new Animal(nomAnimal, Integer.parseInt(ageAnimal), imageAnimal);
+			if(!(nomAnimal.isBlank() || ageAnimal.isBlank() || imageAnimal.isBlank() || typeAnimal.isBlank()
+					|| titreAnnonce.isBlank() || dateAnnonce.isBlank() || descriptionAnnonce.isBlank() || typeAnnonce.isBlank())) {
+				Animal animal = new Animal(nomAnimal, Integer.parseInt(ageAnimal), typeAnimal, imageAnimal);
 				try {
 					int idAnimalInserted = animalDBUtilities.userAddAnimal(animal);
 					animal.setId(idAnimalInserted);	//Changer id de l'animal a l'id generer lors de l'ajout
 					DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-					Annonce annonce = new Annonce((Utilisateur)session.getAttribute("user"), animal, titreAnnonce, descriptionAnnonce, descriptionAnnonce, formatter.parse(dateAnnonce));
+					Annonce annonce = new Annonce((Utilisateur)session.getAttribute("user"), animal, titreAnnonce, descriptionAnnonce, descriptionAnnonce, typeAnnonce, formatter.parse(dateAnnonce));
 					annonceDBUtilities.userAddAnnonce(annonce);
 					request.setAttribute("successAnnonceStatus", "Votre annonce a été bien ajoutée !");
 				} catch (SQLException | ParseException e) {

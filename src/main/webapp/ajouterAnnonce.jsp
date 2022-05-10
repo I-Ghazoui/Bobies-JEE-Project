@@ -51,6 +51,9 @@
 										<option value="chien">Chien</option>
 										<option value="chat">Chat</option>
 										<option value="oiseau">Oiseau</option>
+										<option value="lapin">Lapin</option>
+										<option value="poisson">Poisson</option>
+										<option value="cameleon">Cameleon</option>
 									</select>
                                 </div>
                             </div>

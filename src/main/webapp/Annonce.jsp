@@ -4,8 +4,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-ArrayList<Annonce> listDesAnnonces = (ArrayList<Annonce>) request.getAttribute("listDesAnnonces");
-String var = "hahahahahahaha";
+	ArrayList<Annonce> listDesAnnonces = (ArrayList<Annonce>) request.getAttribute("listDesAnnonces");
+	String selectedTypeAnimal = ((String)request.getAttribute("typeAnimal"));
+	String selectedTypeAnnonce = ((String)request.getAttribute("typeAnnonce"));
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@ String var = "hahahahahahaha";
 			style="margin: 0 auto; background-color: #ffffff; border-radius: 4px; color: #505e6c; box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);">
 			<div class="row">
 				<div class="col-12 p-0">
-					<form class="d-flex justify-content-between p-2" method="post">
+					<form class="d-flex justify-content-between p-2" action="Annonces" method="post">
 						<div class="d-flex align-items-center illustration">
 							<i class="material-icons" style="color: var(- -bs-gray-dark);">pets</i>
 							<h2 class="d-flex align-items-center m-0">Annonces</h2>
@@ -43,23 +44,26 @@ String var = "hahahahahahaha";
 							<div class="mx-1">
 								<select class="form-select form-control" name="TypeAnimal">
 									<option value="" selected="">Type d&apos;Animal</option>
-									<option value="chien">Chien</option>
-									<option value="chat">Chat</option>
-									<option value="oiseau">Oiseau</option>
+									<option value="chien" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("chien")){out.print("selected");} %>>Chien</option>
+									<option value="chat" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("chat")){out.print("selected");} %>>Chat</option>
+									<option value="oiseau" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("oiseau")){out.print("selected");} %>>Oiseau</option>
+									<option value="lapin" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("lapin")){out.print("selected");} %>>Lapin</option>
+									<option value="poisson" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("poisson")){out.print("selected");} %>>Poisson</option>
+									<option value="cameleon" <% if(selectedTypeAnimal!=null && selectedTypeAnimal.equals("cameleon")){out.print("selected");} %>>Cameleon</option>
 								</select>
 							</div>
 							<div class="mx-1">
 								<select class="form-select form-control" name="TypeAnnonce">
 									<option value="" selected="">Type d&apos;Annonce</option>
 									<optgroup label="Adoption">
-										<option value="offreAnimal">Offre d&apos;animal</option>
-										<option value="demandeAdoption">Demande
+										<option value="offreAnimal" <% if(selectedTypeAnnonce!=null && selectedTypeAnnonce.equals("offreAnimal")){out.print("selected");} %>>Offre d&apos;animal</option>
+										<option value="demandeAdoption" <% if(selectedTypeAnnonce!=null && selectedTypeAnnonce.equals("demandeAdoption")){out.print("selected");} %>>Demande
 											d&apos;adoption</option>
 									</optgroup>
 									<optgroup label="Hébergement provisoire">
-										<option value="demandeHebergement">Demande
+										<option value="demandeHebergement" <% if(selectedTypeAnnonce!=null && selectedTypeAnnonce.equals("demandeHebergement")){out.print("selected");} %>>Demande
 											d&apos;hébergement</option>
-										<option value="offreHebergement">Offre
+										<option value="offreHebergement" <% if(selectedTypeAnnonce!=null && selectedTypeAnnonce.equals("offreHebergement")){out.print("selected");} %>>Offre
 											d&apos;hébergement</option>
 									</optgroup>
 								</select>
@@ -77,7 +81,7 @@ String var = "hahahahahahaha";
 							<div class="col-lg-3 p-2">
 								<div class="card shadow">
 									<div class="innerCard">
-										<img src="<c:out value="${annonce.animal.image}" />"
+										<img src="<c:out value="assets/uploadedFiles/animals/${annonce.animal.image}" />"
 											class="card-img-top" alt="...">
 									</div>
 									<div class="card-body text-center">
